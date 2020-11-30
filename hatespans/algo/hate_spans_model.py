@@ -136,9 +136,9 @@ class HateSpansModel:
         if not use_cuda:
             self.args.fp16 = False
 
-        if labels is not None and self.args.labels_list is not None:
-            assert labels == self.args.labels_list
-            self.args.labels_list = labels
+        # if labels is not None and self.args.labels_list is not None:
+        #     assert labels == self.args.labels_list
+        #     self.args.labels_list = labels
 
         if labels is not None:
             self.args.labels_list = labels
