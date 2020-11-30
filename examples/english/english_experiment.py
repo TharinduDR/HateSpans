@@ -4,14 +4,12 @@ from examples.english.transformer_configs import transformer_config, MODEL_TYPE,
 from hatespans.algo.hate_spans_model import HateSpansModel
 from hatespans.algo.preprocess import read_datafile, format_data
 
-train = read_datafile('data/tsd_train.csv')
-dev = read_datafile('data/tsd_trial.csv')
+train = read_datafile('examples/english/data/tsd_train.csv')
+dev = read_datafile('examples//english/data/tsd_trial.csv')
 
 train_df = format_data(train)
 # train_df.to_csv("train_1.csv", sep='\t', encoding='utf-8', index=False)
 tags = train_df['labels'].unique()
-
-print(tags)
 
 model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
 
