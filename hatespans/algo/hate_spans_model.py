@@ -137,7 +137,7 @@ class HateSpansModel:
             self.args.fp16 = False
 
         if labels is not None and self.args.labels_list is not None:
-            assert labels.all() == self.args.labels_list.all()
+            assert labels == self.args.labels_list
             self.args.labels_list = labels
 
         if labels is not None:
