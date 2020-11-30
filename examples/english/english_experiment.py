@@ -14,7 +14,7 @@ tags = train_df['labels'].unique()
 model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
 
 if transformer_config["evaluate_during_training"]:
-    train_df, eval_df = train_test_split(train, test_size=0.1,  shuffle=False)
+    train_df, eval_df = train_test_split(train_df, test_size=0.1,  shuffle=False)
     model.train_model(train_df, eval_df=eval_df)
 
 else:
