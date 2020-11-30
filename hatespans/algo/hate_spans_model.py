@@ -137,8 +137,11 @@ class HateSpansModel:
         if not use_cuda:
             self.args.fp16 = False
 
+        print(labels)
+        print(self.args.labels_list)
+
         if labels and self.args.labels_list:
-            assert labels == self.args.labels_list
+            assert labels.all() == self.args.labels_list.all()
             self.args.labels_list = labels
         elif labels:
             self.args.labels_list = labels
