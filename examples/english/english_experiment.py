@@ -9,8 +9,9 @@ dev = read_datafile('examples/english/data/tsd_trial.csv')
 
 train_df = format_data(train)
 # train_df.to_csv("train_1.csv", sep='\t', encoding='utf-8', index=False)
+tags = train_df['labels'].unique()
 
-model = HateSpansModel(MODEL_TYPE, MODEL_NAME, args=transformer_config)
+model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
 
 if transformer_config["evaluate_during_training"]:
     train_df, eval_df = train_test_split(train, test_size=0.1,  shuffle=False)
