@@ -46,8 +46,6 @@ def format_data(data: []):
     tokenizer = nlp.Defaults.create_tokenizer(nlp)
     output = []
     for n, (spans, text) in enumerate(data):
-        print(spans)
-        print(text)
         contiguous_spans = contiguous_ranges(spans)
         # toxic_words = []
         # for contiguous_span in contiguous_spans:
