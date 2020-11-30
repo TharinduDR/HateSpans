@@ -62,9 +62,9 @@ def format_data(data: []):
                     is_toxic = True
                     break
             if is_toxic:
-                output.append([n, token, "TOXIC"])
+                output.append([n, token.text, "TOXIC"])
             else:
-                output.append([n, token, "NOT_TOXIC"])
+                output.append([n, token.text, "NOT_TOXIC"])
 
     return pd.DataFrame(output, columns=['sentence_id', 'words', 'labels'])
 
