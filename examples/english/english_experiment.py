@@ -2,6 +2,7 @@ from sklearn.model_selection import train_test_split
 
 from examples.english.transformer_configs import transformer_config, MODEL_TYPE, MODEL_NAME
 from hatespans.algo.hate_spans_model import HateSpansModel
+from hatespans.algo.predict import predict_spans
 from hatespans.algo.preprocess import read_datafile, format_data
 
 train = read_datafile('examples/english/data/tsd_train.csv')
@@ -19,6 +20,14 @@ if transformer_config["evaluate_during_training"]:
 
 else:
     model.train_model(train_df)
+
+model = HateSpansModel(MODEL_TYPE, transformer_config["best_model_dir"], labels=tags, args=transformer_config)
+
+for n, (spans, text) in enumerate(dev):
+    predict_spans(model, text)
+
+
+
 
 
 
