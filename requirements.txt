@@ -1,0 +1,6 @@
+spacy==2.3.4
+pandas==1.1.4
+transformers>=3.0.2
+seqeval==1.2.2
+tensorboardX==2.1
+wandb==0.10.11
