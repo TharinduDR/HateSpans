@@ -73,7 +73,6 @@ transformer_config = {
     "begin_tag": "<BEGIN>",
     "end_tag": "<END>",
 
-    "labels_list": ["NOT_TOXIC", "TOXIC"]
 }
 
 

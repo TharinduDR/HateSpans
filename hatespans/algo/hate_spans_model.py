@@ -63,7 +63,6 @@ from hatespans.algo.utils import InputExample, read_examples_from_file, get_exam
 from hatespans.config.model_args import NERArgs
 from hatespans.config.utils import sweep_config_to_sweep_values
 
-
 try:
     import wandb
 
@@ -76,15 +75,15 @@ logger = logging.getLogger(__name__)
 
 class HateSpansModel:
     def __init__(
-        self,
-        model_type,
-        model_name,
-        labels=None,
-        args=None,
-        use_cuda=True,
-        cuda_device=-1,
-        onnx_execution_provider=None,
-        **kwargs,
+            self,
+            model_type,
+            model_name,
+            labels=None,
+            args=None,
+            use_cuda=True,
+            cuda_device=-1,
+            onnx_execution_provider=None,
+            **kwargs,
     ):
         """
         Initializes a NERModel
@@ -137,13 +136,11 @@ class HateSpansModel:
         if not use_cuda:
             self.args.fp16 = False
 
-        print(labels)
-        print(self.args.labels_list)
-
-        if labels and self.args.labels_list:
+        if labels is not None and self.args.labels_list is not None:
             assert labels.all() == self.args.labels_list.all()
             self.args.labels_list = labels
-        elif labels:
+
+        if labels is not None:
             self.args.labels_list = labels
         elif self.args.labels_list:
             pass
@@ -250,7 +247,7 @@ class HateSpansModel:
             self.args.wandb_project = None
 
     def train_model(
-        self, train_data, output_dir=None, show_running_loss=True, args=None, eval_data=None, verbose=True, **kwargs
+            self, train_data, output_dir=None, show_running_loss=True, args=None, eval_data=None, verbose=True, **kwargs
     ):
         """
         Trains the model using 'train_data'
@@ -395,7 +392,7 @@ class HateSpansModel:
         warmup_steps = math.ceil(t_total * args.warmup_ratio)
         args.warmup_steps = warmup_steps if args.warmup_steps == 0 else args.warmup_steps
 
-        optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon,)
+        optimizer = AdamW(optimizer_grouped_parameters, lr=args.learning_rate, eps=args.adam_epsilon, )
         scheduler = get_linear_schedule_with_warmup(
             optimizer, num_warmup_steps=args.warmup_steps, num_training_steps=t_total
         )
@@ -425,7 +422,7 @@ class HateSpansModel:
                 global_step = int(checkpoint_suffix)
                 epochs_trained = global_step // (len(train_dataloader) // args.gradient_accumulation_steps)
                 steps_trained_in_current_epoch = global_step % (
-                    len(train_dataloader) // args.gradient_accumulation_steps
+                        len(train_dataloader) // args.gradient_accumulation_steps
                 )
 
                 logger.info("   Continuing training from checkpoint, will skip to saved global_step")
@@ -532,8 +529,8 @@ class HateSpansModel:
                         self.save_model(output_dir_current, optimizer, scheduler, model=model)
 
                     if args.evaluate_during_training and (
-                        args.evaluate_during_training_steps > 0
-                        and global_step % args.evaluate_during_training_steps == 0
+                            args.evaluate_during_training_steps > 0
+                            and global_step % args.evaluate_during_training_steps == 0
                     ):
 
                         output_dir_current = os.path.join(output_dir, "checkpoint-{}".format(global_step))
@@ -951,7 +948,7 @@ class HateSpansModel:
                 else:
                     preds = np.append(preds, output[0], axis=0)
                     out_input_ids = np.append(out_input_ids, inputs_onnx["input_ids"], axis=0)
-                    out_attention_mask = np.append(out_attention_mask, inputs_onnx["attention_mask"], axis=0,)
+                    out_attention_mask = np.append(out_attention_mask, inputs_onnx["attention_mask"], axis=0, )
             out_label_ids = np.zeros_like(out_input_ids)
             for index in range(len(out_label_ids)):
                 out_label_ids[index][0] = -100
@@ -1129,8 +1126,8 @@ class HateSpansModel:
                 os.makedirs(self.args.cache_dir, exist_ok=True)
 
             if os.path.exists(cached_features_file) and (
-                (not args.reprocess_input_data and not no_cache)
-                or (mode == "dev" and args.use_cached_eval_features and not no_cache)
+                    (not args.reprocess_input_data and not no_cache)
+                    or (mode == "dev" and args.use_cached_eval_features and not no_cache)
             ):
                 features = torch.load(cached_features_file)
                 logger.info(f" Features loaded from cache at {cached_features_file}")
