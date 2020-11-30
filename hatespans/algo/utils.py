@@ -304,7 +304,7 @@ def convert_examples_to_features(
     process_count=cpu_count() - 2,
     chunksize=500,
     silent=False,
-    use_multiprocessing=False,
+    use_multiprocessing=True,
 ):
     """ Loads a data file into a list of `InputBatch`s
         `cls_token_at_end` define the location of the CLS token:
