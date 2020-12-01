@@ -18,21 +18,24 @@ def predict_spans(model, text):
     cleaned_index = 0
     for token in tokens:
         if not token.text.isspace():
-            cleaned_index += 1
             tokenised_text.append(token.text)
             indexed_token = IndexedToken(token, cleaned_index)
             cleaned_tokens.append(indexed_token)
+            cleaned_index += 1
         else:
             indexed_token = IndexedToken(token, token.i)
             cleaned_tokens.append(indexed_token)
 
     sentences.append(tokenised_text)
 
-    predictions, raw_outputs = model.predict(sentences)
+    predictions, raw_outputs = model.predict(sentences, split_on_space=False)
     span_predictions = []
     sentence_prediction = predictions[0]
+    print(sentence_prediction)
 
     for cleaned_token in cleaned_tokens:
+        if cleaned_token.token.text.isspace():
+            continue
         word_prediction = sentence_prediction[cleaned_token.clean_index]
         toxicness = word_prediction[cleaned_token.token.text]
         if toxicness == "TOXIC":
