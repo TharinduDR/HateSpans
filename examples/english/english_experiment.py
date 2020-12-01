@@ -1,6 +1,9 @@
+import statistics
+
 from sklearn.model_selection import train_test_split
 
 from examples.english.transformer_configs import transformer_config, MODEL_TYPE, MODEL_NAME
+from hatespans.algo.evaluation import f1
 from hatespans.algo.hate_spans_model import HateSpansModel
 from hatespans.algo.predict import predict_spans
 from hatespans.algo.preprocess import read_datafile, format_data
@@ -23,8 +26,16 @@ else:
 
 model = HateSpansModel(MODEL_TYPE, transformer_config["best_model_dir"], labels=tags, args=transformer_config)
 
+
+scores = []
 for n, (spans, text) in enumerate(dev):
     predictions = predict_spans(model, text)
+    score = f1(predictions, spans)
+    scores.append(score)
+
+
+print('avg F1 %g' % statistics.mean(scores))
+
 
 
 
