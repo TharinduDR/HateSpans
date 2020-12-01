@@ -1,15 +1,41 @@
+import os
 import statistics
 
 from sklearn.model_selection import train_test_split
 
-from examples.english.transformer_configs import transformer_config, MODEL_TYPE, MODEL_NAME
+from examples.english.transformer_configs import transformer_config, MODEL_TYPE, MODEL_NAME, LANGUAGE_FINETUNE, \
+    language_modeling_args, TEMP_DIRECTORY
 from hatespans.algo.evaluation import f1
 from hatespans.algo.hate_spans_model import HateSpansModel
+from hatespans.algo.language_modeling import LanguageModelingModel
 from hatespans.algo.predict import predict_spans
-from hatespans.algo.preprocess import read_datafile, format_data
+from hatespans.algo.preprocess import read_datafile, format_data, format_lm
+import torch
 
 train = read_datafile('examples/english/data/tsd_train.csv')
 dev = read_datafile('examples//english/data/tsd_trial.csv')
+
+
+if LANGUAGE_FINETUNE:
+    train_list = format_lm(train)
+    dev_list = format_lm.tolist(dev)
+
+    complete_list = train_list + dev_list
+    lm_train = complete_list[0: int(len(complete_list)*0.8)]
+    lm_test = complete_list[-int(len(complete_list)*0.2):]
+
+    with open(os.path.join(TEMP_DIRECTORY, "lm_train.txt"), 'w') as f:
+        for item in lm_train:
+            f.write("%s\n" % item)
+
+    with open(os.path.join(TEMP_DIRECTORY, "lm_test.txt"), 'w') as f:
+        for item in lm_test:
+            f.write("%s\n" % item)
+
+    model = LanguageModelingModel("auto", MODEL_NAME, args=language_modeling_args, use_cuda=torch.cuda.is_available())
+    model.train_model(os.path.join(TEMP_DIRECTORY, "lm_train.txt"), eval_file=os.path.join(TEMP_DIRECTORY, "lm_test.txt"))
+    MODEL_NAME = language_modeling_args["best_model_dir"]
+
 
 train_df = format_data(train)
 # train_df.to_csv("train_1.csv", sep='\t', encoding='utf-8', index=False)

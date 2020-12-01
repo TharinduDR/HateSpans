@@ -68,3 +68,9 @@ def format_data(data: []):
 
     return pd.DataFrame(output, columns=['sentence_id', 'words', 'labels'])
 
+
+def format_lm(data: []):
+    text_list = []
+    for n, (spans, text) in enumerate(data):
+        text_list.append(text)
+    return text_list
