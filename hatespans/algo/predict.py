@@ -1,4 +1,11 @@
 from spacy.lang.en import English
+from spacy.tokens import Token
+
+
+class IndexedToken:
+    def __init__(self, token: Token, clean_index):
+        self.token = token
+        self.clean_index = clean_index
 
 
 def predict_spans(model, text):
@@ -7,22 +14,34 @@ def predict_spans(model, text):
     tokens = tokenizer(text)
     sentences = []
     tokenised_text = []
+    cleaned_tokens = []
+    cleaned_index = 0
     for token in tokens:
-        tokenised_text.append(token.text)
+        if not token.text.isspace():
+            cleaned_index += 1
+            tokenised_text.append(token.text)
+            indexed_token = IndexedToken(token, cleaned_index)
+            cleaned_tokens.append(indexed_token)
+        else:
+            indexed_token = IndexedToken(token, token.i)
+            cleaned_tokens.append(indexed_token)
+
     sentences.append(tokenised_text)
 
     predictions, raw_outputs = model.predict(sentences)
     span_predictions = []
+    sentence_prediction = predictions[0]
 
-    for token in tokens:
-        toxicness = predictions[token.text]
+    for cleaned_token in cleaned_tokens:
+        word_prediction = sentence_prediction[cleaned_token.clean_index]
+        toxicness = word_prediction[cleaned_token.token.text]
         if toxicness == "TOXIC":
-            location = token.idx
+            location = cleaned_token.token.idx
             if len(span_predictions) > 0:
                 last_index = span_predictions[-1]
                 if location == last_index + 2:
                     span_predictions.append(location - 1)
-            length = len(token.text)
+            length = len(cleaned_token.token.text)
             for i in range(length):
                 span_predictions.append(location + i)
     return span_predictions
