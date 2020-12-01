@@ -1252,10 +1252,10 @@ class HateSpansModel:
         return training_progress_scores
 
     def save_model(self, output_dir=None, optimizer=None, scheduler=None, model=None, results=None):
-        if self.args.save_recent_only:
-            del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
-            for del_path in del_paths:
-                shutil.rmtree(del_path)
+        # if self.args.save_recent_only:
+        #     del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+        #     for del_path in del_paths:
+        #         shutil.rmtree(del_path)
         if not output_dir:
             output_dir = self.args.output_dir
         os.makedirs(output_dir, exist_ok=True)

@@ -2,9 +2,9 @@ from multiprocessing import cpu_count
 
 DATA_DIRECTORY = "examples/monolingual/en_en/data/"
 TEMP_DIRECTORY = "temp/data"
-LANGUAGE_FINETUNE =True
+LANGUAGE_FINETUNE =False
 MODEL_TYPE = "bert"
-MODEL_NAME = "bert-base-cased"
+MODEL_NAME = "bert-large-cased"
 
 transformer_config = {
     'output_dir': 'temp/outputs/',
@@ -13,7 +13,7 @@ transformer_config = {
 
     'fp16': False,
     'fp16_opt_level': 'O1',
-    'max_seq_length': 120,
+    'max_seq_length': 180,
     'train_batch_size': 8,
     'gradient_accumulation_steps': 1,
     'eval_batch_size': 8,
@@ -78,7 +78,7 @@ language_modeling_args = {
 
     'fp16': False,
     'fp16_opt_level': 'O1',
-    'max_seq_length': 152,  # 128
+    'max_seq_length': 180,  # 128
     'train_batch_size': 8,
     'gradient_accumulation_steps': 1,
     'eval_batch_size': 8,
