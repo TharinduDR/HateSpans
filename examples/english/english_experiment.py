@@ -12,6 +12,9 @@ from hatespans.algo.predict import predict_spans
 from hatespans.algo.preprocess import read_datafile, format_data, format_lm
 import torch
 
+if not os.path.exists(TEMP_DIRECTORY):
+    os.makedirs(TEMP_DIRECTORY)
+
 train = read_datafile('examples/english/data/tsd_train.csv')
 dev = read_datafile('examples//english/data/tsd_trial.csv')
 
