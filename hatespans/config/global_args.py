@@ -38,6 +38,7 @@ global_args = {
     "save_best_model": True,
     "save_eval_checkpoints": True,
     "save_model_every_epoch": True,
+    "save_recent_only": True,
     "save_steps": 2000,
     "save_optimizer_and_scheduler": True,
     "silent": False,

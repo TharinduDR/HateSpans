@@ -68,6 +68,7 @@ class ModelArgs:
     save_eval_checkpoints: bool = True
     save_model_every_epoch: bool = True
     save_optimizer_and_scheduler: bool = True
+    save_recent_only: bool = True
     save_steps: int = 2000
     silent: bool = False
     tensorboard_dir: str = None
