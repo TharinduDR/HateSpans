@@ -24,7 +24,7 @@ else:
 model = HateSpansModel(MODEL_TYPE, transformer_config["best_model_dir"], labels=tags, args=transformer_config)
 
 for n, (spans, text) in enumerate(dev):
-    predict_spans(model, text)
+    predictions = predict_spans(model, text)
 
 
 
