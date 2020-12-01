@@ -18,7 +18,7 @@ dev = read_datafile('examples//english/data/tsd_trial.csv')
 
 if LANGUAGE_FINETUNE:
     train_list = format_lm(train)
-    dev_list = format_lm.tolist(dev)
+    dev_list = format_lm(dev)
 
     complete_list = train_list + dev_list
     lm_train = complete_list[0: int(len(complete_list)*0.8)]
