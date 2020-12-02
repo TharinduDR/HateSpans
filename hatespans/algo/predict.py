@@ -31,12 +31,15 @@ def predict_spans(model, text):
     predictions, raw_outputs = model.predict(sentences, split_on_space=False)
     span_predictions = []
     sentence_prediction = predictions[0]
-    print(sentence_prediction)
 
     for cleaned_token in cleaned_tokens:
-        print(cleaned_token.token.text)
+
+        if cleaned_token.clean_index == len(sentence_prediction):
+            break
+
         if cleaned_token.token.text.isspace():
             continue
+
         word_prediction = sentence_prediction[cleaned_token.clean_index]
         toxicness = word_prediction[cleaned_token.token.text]
         if toxicness == "TOXIC":
