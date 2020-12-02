@@ -4,7 +4,7 @@ DATA_DIRECTORY = "examples/monolingual/en_en/data/"
 TEMP_DIRECTORY = "temp/data"
 LANGUAGE_FINETUNE = False
 MODEL_TYPE = "bert"
-MODEL_NAME = "bert-base-cased"
+MODEL_NAME = "bert-large-cased"
 
 transformer_config = {
     'output_dir': 'temp/outputs/',
