@@ -55,7 +55,7 @@ from transformers import (
     LayoutLMConfig,
     LayoutLMForTokenClassification,
     LayoutLMTokenizer,
-    get_linear_schedule_with_warmup,
+    get_linear_schedule_with_warmup, XLNetConfig, XLNetForTokenClassification, XLNetTokenizer,
 )
 from wandb import config
 from transformers.convert_graph_to_onnx import convert, quantize
@@ -103,6 +103,7 @@ class HateSpansModel:
         MODEL_CLASSES = {
             "auto": (AutoConfig, AutoTokenizer, AutoModelForTokenClassification),
             "bert": (BertConfig, BertForTokenClassification, BertTokenizer),
+            'xlnet': (XLNetConfig, XLNetForTokenClassification, XLNetTokenizer),
             "bertweet": (RobertaConfig, RobertaForTokenClassification, BertweetTokenizer),
             "camembert": (CamembertConfig, CamembertForTokenClassification, CamembertTokenizer),
             "distilbert": (DistilBertConfig, DistilBertForTokenClassification, DistilBertTokenizer),
@@ -525,6 +526,10 @@ class HateSpansModel:
                             )
 
                     if args.save_steps > 0 and global_step % args.save_steps == 0:
+                        if args.save_recent_only:
+                            del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                            for del_path in del_paths:
+                                shutil.rmtree(del_path)
                         # Save model checkpoint
                         output_dir_current = os.path.join(output_dir, "checkpoint-{}".format(global_step))
 
@@ -534,6 +539,10 @@ class HateSpansModel:
                             args.evaluate_during_training_steps > 0
                             and global_step % args.evaluate_during_training_steps == 0
                     ):
+                        if args.save_recent_only:
+                            del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                            for del_path in del_paths:
+                                shutil.rmtree(del_path)
 
                         output_dir_current = os.path.join(output_dir, "checkpoint-{}".format(global_step))
 
@@ -622,6 +631,12 @@ class HateSpansModel:
                                         )
 
             epoch_number += 1
+
+            if args.save_recent_only:
+                del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                for del_path in del_paths:
+                    shutil.rmtree(del_path)
+
             output_dir_current = os.path.join(output_dir, "checkpoint-{}-epoch-{}".format(global_step, epoch_number))
 
             if args.save_model_every_epoch or args.evaluate_during_training:
