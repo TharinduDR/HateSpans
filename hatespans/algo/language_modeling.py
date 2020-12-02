@@ -4,11 +4,13 @@
 
 from __future__ import absolute_import, division, print_function
 
+import glob
 import json
 import logging
 import math
 import os
 import random
+import shutil
 import warnings
 from dataclasses import asdict
 from multiprocessing import cpu_count
@@ -650,6 +652,10 @@ class LanguageModelingModel:
                             )
 
                     if args.save_steps > 0 and global_step % args.save_steps == 0:
+                        if args.save_recent_only:
+                            del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                            for del_path in del_paths:
+                                shutil.rmtree(del_path)
                         # Save model checkpoint
                         output_dir_current = os.path.join(output_dir, "checkpoint-{}".format(global_step))
 
@@ -670,6 +676,11 @@ class LanguageModelingModel:
                         if self.is_world_master():
                             for key, value in results.items():
                                 tb_writer.add_scalar("eval_{}".format(key), value, global_step)
+
+                        if args.save_recent_only:
+                            del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                            for del_path in del_paths:
+                                shutil.rmtree(del_path)
 
                         output_dir_current = os.path.join(output_dir, "checkpoint-{}".format(global_step))
 
@@ -751,6 +762,12 @@ class LanguageModelingModel:
                     )
 
             epoch_number += 1
+
+            if args.save_recent_only:
+                del_paths = glob.glob(os.path.join(output_dir, 'checkpoint-*'))
+                for del_path in del_paths:
+                    shutil.rmtree(del_path)
+
             output_dir_current = os.path.join(output_dir, "checkpoint-{}-epoch-{}".format(global_step, epoch_number))
 
             if args.save_model_every_epoch or args.evaluate_during_training:
