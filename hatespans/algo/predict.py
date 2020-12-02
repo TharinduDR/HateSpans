@@ -34,7 +34,7 @@ def predict_spans(model, text):
 
     for cleaned_token in cleaned_tokens:
 
-        if cleaned_token.clean_index == len(sentence_prediction):
+        if cleaned_token.clean_index >= len(sentence_prediction):
             break
 
         if cleaned_token.token.text.isspace():
