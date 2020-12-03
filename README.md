@@ -4,6 +4,18 @@
 
 We provide state-of-the-art models to detect toxic spans in text. We have evaluated our models on  Toxic Spanstask at SemEval 2021 (Task 5).
 
+## Installation
+You first need to install PyTorch. The recommended PyTorch version is 1.6.
+Please refer to [PyTorch installation page](https://pytorch.org/get-started/locally/#start-locally) regarding the specific install command for your platform.
+
+When PyTorch has been installed, you can install HateSpans from pip. 
+
+#### From pip
+
+```bash
+pip install hatespans
+```
+
 ## Pretrained HateSpans Models
 
 We will be keep releasing new models. Please keep in touch.
