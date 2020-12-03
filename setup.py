@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="hate_spans",
+    name="hatespans",
     version="0.1.0-beta",
     author="Tharindu Ranasinghe",
     author_email="rhtdranasinghe@gmail.com",
