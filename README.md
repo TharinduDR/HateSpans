@@ -13,7 +13,7 @@ When PyTorch has been installed, you can install HateSpans from pip.
 #### From pip
 
 ```bash
-pip install hatespans
+pip install hate-spans
 ```
 
 ## Pretrained HateSpans Models

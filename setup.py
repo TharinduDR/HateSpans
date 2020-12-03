@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="hatespans",
-    version="0.1.0-beta",
+    version="0.1.0",
     author="Tharindu Ranasinghe",
     author_email="rhtdranasinghe@gmail.com",
     description="Toxic Spans Prediction",
