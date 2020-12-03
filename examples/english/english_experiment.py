@@ -41,7 +41,6 @@ if LANGUAGE_FINETUNE:
 
 
 train_df = format_data(train)
-# train_df.to_csv("train_1.csv", sep='\t', encoding='utf-8', index=False)
 tags = train_df['labels'].unique().tolist()
 
 model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
