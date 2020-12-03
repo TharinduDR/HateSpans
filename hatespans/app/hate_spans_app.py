@@ -4,6 +4,8 @@ from hatespans.algo.hate_spans_model import HateSpansModel
 import logging
 from google_drive_downloader import GoogleDriveDownloader as gdd
 
+from hatespans.algo.predict import predict_spans
+
 
 class HateSpansApp:
     def __init__(self, model_name_or_path, model_type,  use_cuda=True,  cuda_device=-1):
@@ -51,6 +53,6 @@ class HateSpansApp:
                                             dest_path= os.path.join(".hate_span", model_name, "model.zip"),
                                             unzip=True)
 
-    def predict_spans(self, text):
-        return
+    def predict_hate_spans(self, text):
+        return predict_spans(self.model, text)
 
