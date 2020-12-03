@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
-[![PyPI version](https://img.shields.io/pypi/v/hate-spans?color=%236ecfbd&label=pypi%20package&style=flat-square)](https://pypi.org/project/hate-spans/)
+[![PyPI version](https://img.shields.io/pypi/v/hatespans?color=%236ecfbd&label=pypi%20package&style=flat-square)](https://pypi.org/project/hatespans/)
 
 # HateSpans
 
@@ -14,7 +14,7 @@ When PyTorch has been installed, you can install HateSpans from pip.
 #### From pip
 
 ```bash
-pip install hate-spans
+pip install hatespans
 ```
 
 ## Pretrained HateSpans Models
