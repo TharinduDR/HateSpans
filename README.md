@@ -1,4 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
+[![PyPI version](https://img.shields.io/pypi/v/hate-spans?color=%236ecfbd&label=pypi%20package&style=flat-square)](https://pypi.org/project/hate-spans/)
 
 # HateSpans
 
