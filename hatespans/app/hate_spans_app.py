@@ -5,6 +5,7 @@ import logging
 from google_drive_downloader import GoogleDriveDownloader as gdd
 
 from hatespans.algo.predict import predict_spans
+from hatespans.algo.preprocess import contiguous_ranges
 
 
 class HateSpansApp:
@@ -53,6 +54,10 @@ class HateSpansApp:
                                             dest_path= os.path.join(".hate_span", model_name, "model.zip"),
                                             unzip=True)
 
-    def predict_hate_spans(self, text):
-        return predict_spans(self.model, text)
+    def predict_hate_spans(self, text, spans=False):
+        hate_spans = predict_spans(self.model, text)
+        if spans:
+            return contiguous_ranges(hate_spans)
+        else:
+            return hate_spans
 
