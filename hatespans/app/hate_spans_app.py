@@ -8,7 +8,7 @@ from hatespans.algo.predict import predict_spans
 
 
 class HateSpansApp:
-    def __init__(self, model_name_or_path, model_type,  use_cuda=True,  cuda_device=-1):
+    def __init__(self, model_name_or_path, model_type=None,  use_cuda=True,  cuda_device=-1):
 
         self.model_name_or_path = model_name_or_path
         self.model_type = model_type
