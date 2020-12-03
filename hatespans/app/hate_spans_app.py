@@ -52,4 +52,5 @@ class HateSpansApp:
                                             unzip=True)
 
     def predict_spans(self, text):
+        return
 
