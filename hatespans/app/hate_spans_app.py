@@ -1,11 +1,19 @@
 import os
 
+from spacy.lang.en import English
+
 from hatespans.algo.hate_spans_model import HateSpansModel
 import logging
 from google_drive_downloader import GoogleDriveDownloader as gdd
 
 from hatespans.algo.predict import predict_spans
 from hatespans.algo.preprocess import contiguous_ranges
+
+
+class PredictedToken:
+    def __init__(self, text, is_toxic):
+        self.text = text
+        self.is_toxic = is_toxic
 
 
 class HateSpansApp:
@@ -60,4 +68,23 @@ class HateSpansApp:
             return contiguous_ranges(hate_spans)
         else:
             return hate_spans
+
+    def predict_tokens(self, text):
+        hate_spans = contiguous_ranges(predict_spans(self.model, text))
+        nlp = English()
+        tokenizer = nlp.Defaults.create_tokenizer(nlp)
+        tokens = tokenizer(text)
+        output_tokens = []
+        for token in tokens:
+            is_toxic = False
+            for toxic_span in hate_spans:
+                if toxic_span[0] <= token.idx <= toxic_span[1]:
+                    is_toxic = True
+                    break
+
+            predicted_token = PredictedToken(token.text, is_toxic)
+            output_tokens.append(predicted_token)
+
+        return output_tokens
+
 
