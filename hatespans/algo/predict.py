@@ -1,3 +1,4 @@
+from spacy.lang.da import Danish
 from spacy.lang.el import Greek
 from spacy.lang.en import English
 from spacy.tokens import Token
@@ -16,6 +17,9 @@ def predict_spans(model, text: str, language: str = "en"):
 
     elif language == "el":
         nlp = Greek()
+
+    elif language == "da":
+        nlp = Danish()
 
     else:
         raise NotImplementedError
