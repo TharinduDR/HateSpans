@@ -26,6 +26,8 @@ class HateSpansApp:
 
         MODEL_CONFIG = {
             "small": ("bert", "1-V5RxnmbTXNT_YlKzTKz1St4W2xpRqR4"),
+            "multilingual-base": ("xlmroberta", "1-_n72Fovt2tPE2UZ_25JWvSmsSE9K6EZ"),
+            "multilingual-large": ("xlmroberta", "10ZHESe0Um-fbHkSQBOazVTXxo4iYtlaQ")
         }
 
         if model_name_or_path in MODEL_CONFIG:
@@ -55,21 +57,20 @@ class HateSpansApp:
             self.model = HateSpansModel(model_type, self.model_name_or_path, use_cuda=self.use_cuda,
                                         cuda_device=self.cuda_device)
 
-
     @staticmethod
     def _download(drive_id, model_name):
         gdd.download_file_from_google_drive(file_id=drive_id,
                                             dest_path= os.path.join(".hate_span", model_name, "model.zip"),
                                             unzip=True)
 
-    def predict_hate_spans(self, text, spans=False):
-        hate_spans = predict_spans(self.model, text)
+    def predict_hate_spans(self, text: str, spans: bool = False, language: str = "en"):
+        hate_spans = predict_spans(self.model, text, language)
         if spans:
             return contiguous_ranges(hate_spans)
         else:
             return hate_spans
 
-    def predict_tokens(self, text):
+    def predict_tokens(self, text: str):
         hate_spans = contiguous_ranges(predict_spans(self.model, text))
         nlp = English()
         tokenizer = nlp.Defaults.create_tokenizer(nlp)

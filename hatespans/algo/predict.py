@@ -1,5 +1,7 @@
+from spacy.lang.el import Greek
 from spacy.lang.en import English
 from spacy.tokens import Token
+import logging
 
 
 class IndexedToken:
@@ -8,8 +10,16 @@ class IndexedToken:
         self.clean_index = clean_index
 
 
-def predict_spans(model, text):
-    nlp = English()
+def predict_spans(model, text: str, language: str = "en"):
+    if language == "en":
+        nlp = English()
+
+    elif language == "el":
+        nlp = Greek()
+
+    else:
+        raise NotImplementedError
+
     tokenizer = nlp.Defaults.create_tokenizer(nlp)
     tokens = tokenizer(text)
     sentences = []
