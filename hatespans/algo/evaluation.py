@@ -1,3 +1,5 @@
+from sklearn.metrics import f1_score
+
 def f1(predictions, gold):
     """
     F1 (a.k.a. DICE) operating on two lists of offsets (e.g., character).
@@ -15,3 +17,11 @@ def f1(predictions, gold):
     nom = 2 * len(predictions_set.intersection(gold_set))
     denom = len(predictions_set) + len(gold_set)
     return float(nom)/float(denom)
+
+
+def binary_macro_f1(y_true, y_pred):
+    return f1_score(y_true, y_pred, average='macro')
+
+
+def binary_weighted_f1(y_true, y_pred):
+    return f1_score(y_true, y_pred, average='weighted')
