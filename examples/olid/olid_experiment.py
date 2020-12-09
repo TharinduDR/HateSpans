@@ -3,6 +3,7 @@ import pandas as pd
 from hatespans.algo.evaluation import binary_macro_f1, binary_weighted_f1
 from hatespans.app.hate_spans_app import HateSpansApp
 
+
 test = pd.read_csv('data/test_a_tweets.tsv', sep="\t")
 test = test.rename(columns={'tweet': 'text'})
 test = test[['text']]
