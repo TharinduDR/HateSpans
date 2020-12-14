@@ -44,7 +44,7 @@ class HateSpansApp:
             self.model_path = os.path.join(default_cache_path, self.model_name_or_path)
             if not os.path.exists(self.model_path) or not os.listdir(self.model_path):
                 logging.info(
-                    "Downloading sentence transformer model and saving it at {}".format(self.model_path))
+                    "Downloading hate spans model and saving it at {}".format(self.model_path))
 
                 gdd.download_file_from_google_drive(file_id=self.drive_id,
                                                     dest_path=os.path.join(self.model_path, "model.zip"),
