@@ -1,3 +1,4 @@
+from spacy.lang.ar import Arabic
 from spacy.lang.da import Danish
 from spacy.lang.el import Greek
 from spacy.lang.en import English
@@ -20,6 +21,9 @@ def predict_spans(model, text: str, language: str = "en"):
 
     elif language == "da":
         nlp = Danish()
+
+    elif language == "ar":
+        nlp = Arabic()
 
     else:
         raise NotImplementedError
