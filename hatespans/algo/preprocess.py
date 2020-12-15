@@ -1,6 +1,7 @@
 import itertools
 import ast
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from spacy.lang.en import English
 import csv
 import string
@@ -67,6 +68,13 @@ def format_data(data: []):
                 output.append([n, token.text, "NOT_TOXIC"])
 
     return pd.DataFrame(output, columns=['sentence_id', 'words', 'labels'])
+
+
+def split_data(data: [], seed: int):
+    data_frame = pd.DataFrame(data, columns=['spans', 'text'])
+    train_df, val_df = train_test_split(data_frame, test_size=0.2, seed=seed)
+
+    return train_df.to_numpy().tolist(), val_df.to_numpy().tolist()
 
 
 def format_lm(data: []):
