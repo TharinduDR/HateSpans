@@ -67,9 +67,9 @@ for i in range(transformer_config["n_fold"]):
     predictions_list = []
     for n, (spans, text) in enumerate(dev):
         predictions = predict_spans(model, text)
-        predictions_list.append(predictions)
         score = f1(predictions, spans)
         scores.append(score)
+        predictions_list.append(" ".join(str(x) for x in predictions))
 
     dev_preds[:, i] = predictions_list
     print('avg F1 %g' % statistics.mean(scores))
@@ -81,7 +81,7 @@ for n, (spans, text) in enumerate(dev):
     for index in range(0, len(text)):
         count = 0
         for fold_prediction in fold_predictions:
-            if index in fold_prediction:
+            if index in map(int, fold_prediction.split()):
                 count += 1
         if count/transformer_config["n_fold"] >= 0.5:
             majority_span.append(index)
