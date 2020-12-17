@@ -18,8 +18,8 @@ import numpy as np
 if not os.path.exists(TEMP_DIRECTORY):
     os.makedirs(TEMP_DIRECTORY)
 
-train = read_datafile('data/tsd_train.csv')
-dev = read_datafile('data/tsd_trial.csv')
+train = read_datafile('examples/english/data/tsd_train.csv')
+dev = read_datafile('examples//english/data/tsd_trial.csv')
 
 
 if LANGUAGE_FINETUNE:
