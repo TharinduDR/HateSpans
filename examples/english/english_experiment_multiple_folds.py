@@ -18,8 +18,8 @@ import numpy as np
 if not os.path.exists(TEMP_DIRECTORY):
     os.makedirs(TEMP_DIRECTORY)
 
-train = read_datafile('examples/english/data/tsd_train.csv')
-dev = read_datafile('examples//english/data/tsd_trial.csv')
+train = read_datafile('data/tsd_train.csv')
+dev = read_datafile('data/tsd_trial.csv')
 
 
 if LANGUAGE_FINETUNE:
@@ -50,7 +50,7 @@ for i in range(transformer_config["n_fold"]):
     print("Started Fold {}".format(i))
 
     if transformer_config["evaluate_during_training"]:
-        train_list, val_list = split_data(train, seed=int(transformer_config["manual_seed"])*i)
+        train_list, val_list = split_data(train, seed=int(transformer_config["manual_seed"])*(i+1))
         train_df = format_data(train_list)
         val_df = format_data(train_list)
         tags = train_df['labels'].unique().tolist()

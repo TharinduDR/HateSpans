@@ -72,7 +72,8 @@ def format_data(data: []):
 
 def split_data(data: [], seed: int):
     data_frame = pd.DataFrame(data, columns=['spans', 'text'])
-    train_df, val_df = train_test_split(data_frame, test_size=0.2, seed=seed)
+    print(seed)
+    train_df, val_df = train_test_split(data_frame, test_size=0.2, random_state=seed)
 
     return train_df.to_numpy().tolist(), val_df.to_numpy().tolist()
 
