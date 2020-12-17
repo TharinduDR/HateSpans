@@ -78,6 +78,7 @@ scores = []
 for n, (spans, text) in enumerate(dev):
     majority_span = []
     fold_predictions = dev_preds[n]
+    print(fold_predictions)
     for index in range(0, len(text)):
         count = 0
         for fold_prediction in fold_predictions:
