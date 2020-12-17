@@ -44,6 +44,7 @@ if LANGUAGE_FINETUNE:
 
 # model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
 dev_preds = np.zeros((len(dev), transformer_config["n_fold"]), dtype=str)
+fold_preds = []
 for i in range(transformer_config["n_fold"]):
     if os.path.exists(transformer_config['output_dir']) and os.path.isdir(transformer_config['output_dir']):
         shutil.rmtree(transformer_config['output_dir'])
@@ -71,9 +72,11 @@ for i in range(transformer_config["n_fold"]):
         scores.append(score)
         predictions_list.append(" ".join(str(x) for x in predictions))
 
+    fold_preds.append(statistics.mean(scores))
     dev_preds[:, i] = predictions_list
     print('avg F1 %g' % statistics.mean(scores))
 
+print('avg F1 scores in each fold', fold_preds)
 scores = []
 for n, (spans, text) in enumerate(dev):
     majority_span = []
