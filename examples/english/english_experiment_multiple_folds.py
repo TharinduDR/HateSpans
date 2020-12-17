@@ -43,7 +43,7 @@ if LANGUAGE_FINETUNE:
     MODEL_NAME = language_modeling_args["best_model_dir"]
 
 # model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
-dev_preds = np.empty((len(dev), transformer_config["n_fold"]))
+dev_preds = np.zeros((len(dev), transformer_config["n_fold"]), dtype=str)
 for i in range(transformer_config["n_fold"]):
     if os.path.exists(transformer_config['output_dir']) and os.path.isdir(transformer_config['output_dir']):
         shutil.rmtree(transformer_config['output_dir'])
