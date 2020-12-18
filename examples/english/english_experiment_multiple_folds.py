@@ -14,7 +14,6 @@ from hatespans.algo.preprocess import read_datafile, format_data, format_lm, spl
 import torch
 import numpy as np
 
-
 if not os.path.exists(TEMP_DIRECTORY):
     os.makedirs(TEMP_DIRECTORY)
 
@@ -70,7 +69,9 @@ for i in range(transformer_config["n_fold"]):
         predictions = predict_spans(model, text)
         score = f1(predictions, spans)
         scores.append(score)
-        predictions_list.append(" ".join(str(x) for x in predictions))
+        predictions_string = " ".join(str(x) for x in predictions)
+        print(predictions_string)
+        predictions_list.append(predictions_string)
 
     fold_preds.append(statistics.mean(scores))
     dev_preds[:, i] = predictions_list
