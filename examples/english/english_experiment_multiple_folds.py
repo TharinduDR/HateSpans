@@ -42,7 +42,7 @@ if LANGUAGE_FINETUNE:
     MODEL_NAME = language_modeling_args["best_model_dir"]
 
 # model = HateSpansModel(MODEL_TYPE, MODEL_NAME, labels=tags, args=transformer_config)
-dev_preds = np.zeros((len(dev), transformer_config["n_fold"]), dtype=str)
+dev_preds = []
 fold_preds = []
 for i in range(transformer_config["n_fold"]):
     if os.path.exists(transformer_config['output_dir']) and os.path.isdir(transformer_config['output_dir']):
@@ -69,24 +69,24 @@ for i in range(transformer_config["n_fold"]):
         predictions = predict_spans(model, text)
         score = f1(predictions, spans)
         scores.append(score)
-        predictions_string = " ".join(str(x) for x in predictions)
-        print(predictions_string)
-        predictions_list.append(predictions_string)
+        predictions_list.append(predictions)
 
     fold_preds.append(statistics.mean(scores))
-    dev_preds[:, i] = predictions_list
+    dev_preds.append(predictions_list)
     print('avg F1 %g' % statistics.mean(scores))
 
 print('avg F1 scores in each fold', fold_preds)
 scores = []
 for n, (spans, text) in enumerate(dev):
     majority_span = []
-    fold_predictions = dev_preds[n]
-    print(fold_predictions)
+    # fold_predictions = dev_preds[n]
+    fold_predictions = []
+    for prediction_list in dev_preds:
+        fold_predictions.append(prediction_list[n])
     for index in range(0, len(text)):
         count = 0
         for fold_prediction in fold_predictions:
-            if index in map(int, fold_prediction.split()):
+            if index in fold_prediction:
                 count += 1
         if count/transformer_config["n_fold"] >= 0.5:
             majority_span.append(index)
