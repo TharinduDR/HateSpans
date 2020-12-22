@@ -19,7 +19,7 @@ pip install hatespans
 
 ## Pretrained HateSpans Models
 
-We will be keep releasing new models. Please keep in touch. We have evaluated the models on trial set released for Toxic Spanstask at SemEval 2021.
+We will be keep releasing new models. Please keep in touch. We have evaluated the models on the trial set released for Toxic Spanstask at SemEval 2021.
 
 | Models               | Average F1    |
 |----------------------|:-------------:|
@@ -34,7 +34,7 @@ Following code can be used to predict toxic spans in text. Upon executing, it wi
 ```python
 from hatespans.app.hate_spans_app import HateSpansApp
 
-app = HateSpansApp("small", use_cuda=False)
+app = HateSpansApp("en-base", use_cuda=False)
 print(app.predict_hate_spans("You motherfucking cunt", spans=True))
 ```
 
