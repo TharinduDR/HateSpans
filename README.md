@@ -26,7 +26,7 @@ We will be keep releasing new models. Please keep in touch.
 | en-base              | 0.6734        |
 | en-large             | 0.6886        |
 | multilingual-base    | 0.6013        |
-| multilingual-large   | 0.5853        |
+| multilingual-large   | 0.5953        |
 
 ## Prediction
 Following code can be used to predict toxic spans in text. Upon executing, it will download the relevant model and return the toxic spans.   
