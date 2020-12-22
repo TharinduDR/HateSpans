@@ -19,14 +19,14 @@ pip install hatespans
 
 ## Pretrained HateSpans Models
 
-We will be keep releasing new models. Please keep in touch.
+We will be keep releasing new models. Please keep in touch. We have evaluated the models on trial set released for Toxic Spanstask at SemEval 2021.
 
 | Models               | Average F1    |
 |----------------------|:-------------:|
 | en-base              | 0.6734        |
 | en-large             | 0.6886        |
-| multilingual-base    | 0.6013        |
-| multilingual-large   | 0.5953        |
+| multilingual-base    | 0.5953        |
+| multilingual-large   | 0.6013        |
 
 ## Prediction
 Following code can be used to predict toxic spans in text. Upon executing, it will download the relevant model and return the toxic spans.   
