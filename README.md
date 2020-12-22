@@ -34,7 +34,7 @@ Following code can be used to predict toxic spans in text. Upon executing, it wi
 ```python
 from hatespans.app.hate_spans_app import HateSpansApp
 
-app = HateSpansApp("en-base", use_cuda=False)
+app = HateSpansApp("en-large", use_cuda=False)
 print(app.predict_hate_spans("You motherfucking cunt", spans=True))
 ```
 
