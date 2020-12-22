@@ -21,9 +21,12 @@ pip install hatespans
 
 We will be keep releasing new models. Please keep in touch.
 
-| Models   | Average F1    |
-|----------|:-------------:|
-| small    | 0.6652        |
+| Models               | Average F1    |
+|----------------------|:-------------:|
+| en-base              | 0.6734        |
+| en-large             | 0.6886        |
+| multilingual-base    | 0.6013        |
+| multilingual-large   | 0.5853        |
 
 ## Prediction
 Following code can be used to predict toxic spans in text. Upon executing, it will download the relevant model and return the toxic spans.   
