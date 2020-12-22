@@ -1,6 +1,7 @@
 import os
 
 from spacy.lang.en import English
+from spacy.lang.xx import MultiLanguage
 
 from hatespans.algo.hate_spans_model import HateSpansModel
 import logging
@@ -26,6 +27,8 @@ class HateSpansApp:
 
         MODEL_CONFIG = {
             "small": ("bert", "1-V5RxnmbTXNT_YlKzTKz1St4W2xpRqR4"),
+            "en-base": ("xlnet", "1-O0vSS7G0wurvcVAzG4HUEU-oEjB4kAR"),
+            "en-large": ("roberta", "15g2NCeUhe7ScVzU3k1AIrNhBpcR8LqH9"),
             "multilingual-base": ("xlmroberta", "1-_n72Fovt2tPE2UZ_25JWvSmsSE9K6EZ"),
             "multilingual-large": ("xlmroberta", "10ZHESe0Um-fbHkSQBOazVTXxo4iYtlaQ")
         }
@@ -70,9 +73,15 @@ class HateSpansApp:
         else:
             return hate_spans
 
-    def predict_tokens(self, text: str):
+    def predict_tokens(self, text: str, language: str = "en"):
         hate_spans = contiguous_ranges(predict_spans(self.model, text))
-        nlp = English()
+
+        if language == "en":
+            nlp = English()
+
+        else:
+            nlp = MultiLanguage()
+
         tokenizer = nlp.Defaults.create_tokenizer(nlp)
         tokens = tokenizer(text)
         output_tokens = []

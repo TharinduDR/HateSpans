@@ -2,6 +2,7 @@ from spacy.lang.ar import Arabic
 from spacy.lang.da import Danish
 from spacy.lang.el import Greek
 from spacy.lang.en import English
+from spacy.lang.xx import MultiLanguage
 from spacy.tokens import Token
 import logging
 
@@ -26,7 +27,7 @@ def predict_spans(model, text: str, language: str = "en"):
         nlp = Arabic()
 
     else:
-        raise NotImplementedError
+        nlp = MultiLanguage()
 
     tokenizer = nlp.Defaults.create_tokenizer(nlp)
     tokens = tokenizer(text)
