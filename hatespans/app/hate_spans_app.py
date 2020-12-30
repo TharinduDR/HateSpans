@@ -51,7 +51,7 @@ class HateSpansApp:
 
                 gdd.download_file_from_google_drive(file_id=self.drive_id,
                                                     dest_path=os.path.join(self.model_path, "model.zip"),
-                                                    unzip=True)
+                                                    showsize=True, unzip=True)
 
             self.model = HateSpansModel(self.trained_model_type, self.model_path, use_cuda=self.use_cuda,
                                         cuda_device=self.cuda_device)
